@@ -1,0 +1,16 @@
+/* app/globals.css */
+@import "tailwindcss";
+
+@theme {
+  /* ตั้งค่าให้ฟอนต์หลัก (Sans) ใช้ Prompt ก่อนแล้วตามด้วย Inter */
+  --font-sans: var(--font-prompt), var(--font-inter), ui-sans-serif, system-ui;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #f8fafc;
+  color: #1e293b;
+  /* ช่วยให้ตัวอักษรดูคมชัดขึ้นบนหน้าจอ Mac และ Windows */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
