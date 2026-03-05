@@ -1,30 +1,25 @@
-// app/layout.tsx
-import { Inter, Prompt } from 'next/font/google';
-import './globals.css';
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
 
-// โหลดฟอนต์ Inter สำหรับภาษาอังกฤษ/ตัวเลข
-const inter = Inter({ 
-  subsets: ['latin'], 
-  variable: '--font-inter' 
-});
+const inter = Inter({ subsets: ['latin'] })
 
-// โหลดฟอนต์ Prompt สำหรับภาษาไทย (สไตล์โมเดิร์น)
-const prompt = Prompt({ 
-  subsets: ['thai'], 
-  weight: ['300', '400', '600', '700'], 
-  variable: '--font-prompt' 
-});
+export const metadata: Metadata = {
+  title: 'FinTrack - แอปบันทึกรายรับรายจ่าย',
+  description: 'จัดการการเงินของคุณให้เป็นเรื่องง่าย',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="th" className={`${inter.variable} ${prompt.variable}`}>
-      <body className="antialiased">
+    // เติม suppressHydrationWarning ตรงนี้เพื่อแก้ Error
+    <html lang="th" suppressHydrationWarning>
+      <body className={`${inter.className} bg-slate-50 text-slate-900`} suppressHydrationWarning>
         {children}
       </body>
     </html>
-  );
+  )
 }
