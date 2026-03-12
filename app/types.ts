@@ -3,6 +3,6 @@ export interface Transaction {
   type: 'income' | 'expense';
   amount: number;
   category: string;
-  date: string; // <-- ตัวนี้แหละครับที่ TypeScript มันกำลังตามหา!
+  date: string;   // <--- ต้องมีบรรทัดนี้ครับ ระบบถึงจะยอมรับการบันทึกวันที่
   note?: string; 
 }
