@@ -23,11 +23,14 @@ export default function LoginPage() {
     const users = JSON.parse(localStorage.getItem('fintrack-users') || '[]');
 
     if (mode === 'login') {
+      // 🔑 ระบบบัญชีพิเศษสำหรับอาจารย์ (ซ่อนไว้ในโค้ด)
+      const isAdmin = username === 'admin' && password === 'admin1234';
+      
       const user = users.find((u: any) => u.username === username && u.password === password);
       
-      if (user) {
+      if (user || isAdmin) {
         document.cookie = `isLoggedIn=true; path=/`;
-        document.cookie = `currentUser=${username}; path=/`; 
+        document.cookie = `currentUser=${isAdmin ? 'Admin' : username}; path=/`; 
         router.push('/'); 
       } else {
         setErrorMsg('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!');
@@ -41,6 +44,11 @@ export default function LoginPage() {
       if (username.trim() === '' || password.trim() === '') {
         setErrorMsg('กรุณากรอกข้อมูลให้ครบถ้วน!');
         return;
+      }
+      // ห้ามคนทั่วไปตั้งชื่อว่า admin
+      if (username.toLowerCase() === 'admin') {
+         setErrorMsg('ไม่สามารถใช้ชื่อผู้ใช้นี้ได้!');
+         return;
       }
       if (users.some((u: any) => u.username === username)) {
         setErrorMsg('ชื่อผู้ใช้นี้มีคนใช้แล้ว!');
@@ -63,6 +71,11 @@ export default function LoginPage() {
       if (password !== confirmPassword) {
         setErrorMsg('รหัสผ่านใหม่และการยืนยันรหัสผ่านไม่ตรงกัน!');
         return;
+      }
+      // ดักไม่ให้เปลี่ยนรหัส admin
+      if (username.toLowerCase() === 'admin') {
+         setErrorMsg('ไม่ได้รับอนุญาตให้เปลี่ยนรหัสผ่านของบัญชีผู้ดูแลระบบ!');
+         return;
       }
 
       const userIndex = users.findIndex((u: any) => u.username === username);
